@@ -27,11 +27,7 @@ export class PitchClass {
   }
   static H = new PitchClass(11);
 
-  private index: number;
-
-  private constructor(index: number) {
-    this.index = index;
-  }
+  private constructor(public index: number) {}
 
   equals(other: PitchClass): boolean {
     return this.index === other.index;

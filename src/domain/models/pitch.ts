@@ -1,9 +1,14 @@
 import { PitchClass } from "./pitch-class";
 
 const SUBCONTRA = 0;
+const OCTAVE_OFFSET = 11;
 
 export class Pitch {
   constructor(public pitchClass: PitchClass, public octave: number) {}
+
+  get index(): number {
+    return this.pitchClass.index + this.octave * OCTAVE_OFFSET;
+  }
 
   equals(other: Pitch): boolean {
     return (
