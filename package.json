@@ -111,6 +111,13 @@
           "typedefs": false
         }
       ],
+      "@typescript-eslint/array-type": [
+        "warn",
+        {
+          "default": "array-simple",
+          "readonly": "array-simple"
+        }
+      ],
 
       "import/first": "error",
       "import/no-amd": "error",

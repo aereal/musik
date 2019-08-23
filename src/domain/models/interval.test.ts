@@ -32,7 +32,7 @@ describe("Interval", () => {
       expected: boolean;
     }
 
-    const testCases: Array<TestCase> = [
+    const testCases: TestCase[] = [
       { lhs: c0, rhs: c0, method: "isMajor", expected: false },
       { lhs: c0, rhs: e0, method: "isMajor", expected: true },
       { lhs: c0, rhs: es0, method: "isMajor", expected: false },
