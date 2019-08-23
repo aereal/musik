@@ -1,5 +1,6 @@
 import { Pitch } from "./pitch";
 import { zip } from "../../array/zip";
+import { Interval } from "./interval";
 
 export class Harmony {
   private tones: Array<Pitch>;
@@ -12,5 +13,17 @@ export class Harmony {
 
   equals(other: Harmony): boolean {
     return zip(this.tones, other.tones).every(([a, b]) => a.equals(b));
+  }
+
+  intervals(): Array<Interval> {
+    return this.tones.reduceRight<Array<Interval>>((intervals, pitch, i) => {
+      const next = this.tones[i - 1];
+      if (next === undefined) {
+        return intervals;
+      } else {
+        const interval = Interval.of(pitch, next);
+        return [interval, ...intervals];
+      }
+    }, []);
   }
 }
