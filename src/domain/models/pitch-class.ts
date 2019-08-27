@@ -27,9 +27,25 @@ export class PitchClass {
   }
   static H = new PitchClass(11);
 
+  static pitchClasses = function*(
+    from: PitchClass = PitchClass.C
+  ): IterableIterator<PitchClass> {
+    let current = from;
+    while (true) {
+      current = current.next();
+      yield current;
+    }
+  };
+
   private constructor(public index: number) {}
 
   equals(other: PitchClass): boolean {
     return this.index === other.index;
+  }
+
+  private next(): PitchClass {
+    return this.equals(PitchClass.H)
+      ? PitchClass.C
+      : new PitchClass(this.index + 1);
   }
 }
