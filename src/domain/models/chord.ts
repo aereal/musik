@@ -2,14 +2,14 @@ import { Pitch } from "./pitch";
 import { zip } from "../../array/zip";
 import { Interval } from "./interval";
 
-export class Harmony {
+export class Chord {
   private tones: Pitch[];
 
   constructor(base: Pitch, second: Pitch, ...tones: Pitch[]) {
     this.tones = [base, second, ...tones].sort((a, b) => a.compare(b));
   }
 
-  equals(other: Harmony): boolean {
+  equals(other: Chord): boolean {
     return zip(this.tones, other.tones).every(([a, b]) => a.equals(b));
   }
 
