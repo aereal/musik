@@ -6,9 +6,7 @@ export class Harmony {
   private tones: Pitch[];
 
   constructor(base: Pitch, second: Pitch, ...tones: Pitch[]) {
-    this.tones = [base, second, ...tones].sort((a, b) =>
-      a.equals(b) ? 0 : a.index < b.index ? -1 : 1
-    );
+    this.tones = [base, second, ...tones].sort((a, b) => a.compare(b));
   }
 
   equals(other: Harmony): boolean {

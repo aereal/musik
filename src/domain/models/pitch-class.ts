@@ -43,6 +43,10 @@ export class PitchClass {
     return this.index === other.index;
   }
 
+  compare(other: PitchClass): -1 | 0 | 1 {
+    return this.equals(other) ? 0 : this.index < other.index ? -1 : 1;
+  }
+
   private next(): PitchClass {
     return this.equals(PitchClass.H)
       ? PitchClass.C
