@@ -1,4 +1,4 @@
-import { Pitch } from "./pitch";
+import { PitchClass } from "./pitch-class";
 
 enum Distance {
   PERFECT_UNISON = 0,
@@ -18,7 +18,7 @@ enum Distance {
 
 export class Interval {
   static OCTAVE = 11;
-  static of(a: Pitch, b: Pitch): Interval {
+  static of(a: PitchClass, b: PitchClass): Interval {
     return new Interval(Math.abs(a.index - b.index));
   }
 
