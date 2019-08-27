@@ -19,29 +19,49 @@ describe("Interval", () => {
   });
 
   test("describe methods", () => {
-    interface TestCase {
-      args: [PitchClass, PitchClass];
+    interface Describe {
       method: keyof Interval;
       expected: boolean;
     }
+    interface TestCase {
+      args: [PitchClass, PitchClass];
+      describes: Describe[];
+    }
 
     const testCases: TestCase[] = [
-      { args: [C, C], method: "isMajor", expected: false },
-      { args: [C, E], method: "isMajor", expected: true },
-      { args: [E, C], method: "isMajor", expected: true },
-      { args: [C, Es], method: "isMajor", expected: false },
-      { args: [C, C], method: "isMinor", expected: false },
-      { args: [C, E], method: "isMinor", expected: false },
-      { args: [C, Es], method: "isMinor", expected: true },
-      { args: [Es, C], method: "isMinor", expected: true },
-      { args: [C, C], method: "isUnison", expected: true },
-      { args: [C, E], method: "isUnison", expected: false },
-      { args: [C, Es], method: "isUnison", expected: false }
+      {
+        args: [C, C],
+        describes: [
+          { method: "isMajor", expected: false },
+          { method: "isMinor", expected: false },
+          { method: "isUnison", expected: true }
+        ]
+      },
+      {
+        args: [C, E],
+        describes: [
+          { method: "isMajor", expected: true },
+          { method: "isMinor", expected: false },
+          { method: "isUnison", expected: false }
+        ]
+      },
+      {
+        args: [C, Es],
+        describes: [
+          { method: "isMajor", expected: false },
+          { method: "isMinor", expected: true },
+          { method: "isUnison", expected: false }
+        ]
+      }
     ];
 
     for (const testCase of testCases) {
       const [lhs, rhs] = testCase.args;
-      expect(Interval.of(lhs, rhs)[testCase.method]()).toBe(testCase.expected);
+      for (const describe of testCase.describes) {
+        expect(Interval.of(lhs, rhs)[describe.method]()).toBe(
+          describe.expected
+        );
+      }
     }
   });
 });
