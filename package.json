@@ -98,6 +98,7 @@
         "jsx": true
       },
       "sourceType": "module",
+      "createDefaultProgram": true,
       "project": "./tsconfig.json"
     },
     "rules": {
