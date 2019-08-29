@@ -4,6 +4,11 @@ import { PitchClass } from "./pitch-class";
 describe("Interval", () => {
   const { C, D, E, Es } = PitchClass;
 
+  test("equals", () => {
+    expect(Interval.PerfectUnison.equals(new Interval(0))).toBe(true);
+    expect(Interval.PerfectUnison.equals(new Interval(1))).toBe(false);
+  });
+
   test("value", () => {
     expect(Interval.of(C, C)).toEqual(new Interval(0));
     expect(Interval.of(C, D)).toEqual(new Interval(2));
