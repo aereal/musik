@@ -16,5 +16,9 @@ export class Scale {
     return new Scale(new Set([tonic, ii, iii, iv, v, vi, vii]));
   }
 
-  constructor(public readonly notes: Set<PitchClass>) {}
+  constructor(private readonly notes: Set<PitchClass>) {}
+
+  get notesSet(): Set<PitchClass> {
+    return this.notes;
+  }
 }
