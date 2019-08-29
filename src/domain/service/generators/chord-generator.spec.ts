@@ -1,6 +1,7 @@
 import { ChordGenerator } from "./chord-generator";
 import { Scale } from "../../models/scale";
 import { PitchClass } from "../../models/pitch-class";
+import { Chord } from "../../models/chord";
 
 describe("ChordGenerator", () => {
   test("C-major", () => {
@@ -8,9 +9,9 @@ describe("ChordGenerator", () => {
     const cMajor = Scale.major(C);
     const gen = new ChordGenerator(cMajor);
     const i = gen.generate(1);
-    expect(i).toStrictEqual([C, E, G]);
+    expect(i).toStrictEqual(new Chord(C, E, G));
     const ii = gen.generate(2);
-    expect(ii).toStrictEqual([D, F, A]);
+    expect(ii).toStrictEqual(new Chord(D, F, A));
   });
 
   test("A-minor", () => {
@@ -18,8 +19,8 @@ describe("ChordGenerator", () => {
     const aMinor = Scale.naturalMinor(A);
     const gen = new ChordGenerator(aMinor);
     const i = gen.generate(1);
-    expect(i).toStrictEqual([A, C, E]);
+    expect(i).toStrictEqual(new Chord(A, C, E));
     const ii = gen.generate(2);
-    expect(ii).toStrictEqual([H, D, F]);
+    expect(ii).toStrictEqual(new Chord(H, D, F));
   });
 });
