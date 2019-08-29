@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "aereal-org"
+  },
+  "targets": {
+    "aereal-org": {
+      "hosting": {
+        "musik": [
+          "musik-demo"
+        ]
+      }
+    }
   }
 }
