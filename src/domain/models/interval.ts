@@ -16,8 +16,9 @@ enum Distance {
   PERFECT_OCTAVE
 }
 
+const OCTAVE = 11;
+
 export class Interval {
-  static OCTAVE = 11;
   static of(a: PitchClass, b: PitchClass): Interval {
     return new Interval(Math.abs(a.index - b.index));
   }
@@ -25,7 +26,7 @@ export class Interval {
   constructor(private distance: number) {}
 
   simplify(): Interval {
-    return new Interval(this.distance % Interval.OCTAVE);
+    return new Interval(this.distance % OCTAVE);
   }
 
   isUnison(): boolean {
