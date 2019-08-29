@@ -13,6 +13,14 @@ export class Chord {
     return Array.from(this.notes).sort((a, b) => a.compare(b));
   }
 
+  isTriad(): boolean {
+    return this.notes.size === 3;
+  }
+
+  isTetrad(): boolean {
+    return this.notes.size === 4;
+  }
+
   equals(other: Chord): boolean {
     return zip(this.sortedNotes, other.sortedNotes).every(([a, b]) =>
       a.equals(b)
