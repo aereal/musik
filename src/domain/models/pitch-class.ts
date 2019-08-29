@@ -1,3 +1,5 @@
+import { Interval } from "./interval";
+
 export class PitchClass {
   static C = new PitchClass(0);
   static Cis = new PitchClass(1);
@@ -27,9 +29,41 @@ export class PitchClass {
   }
   static H = new PitchClass(11);
 
+  static pitchClasses = function*(
+    from: PitchClass = PitchClass.C
+  ): IterableIterator<PitchClass> {
+    let current = from;
+    while (true) {
+      current = current.next();
+      yield current;
+    }
+  };
+
   private constructor(public index: number) {}
 
   equals(other: PitchClass): boolean {
     return this.index === other.index;
+  }
+
+  compare(other: PitchClass): -1 | 0 | 1 {
+    return this.equals(other) ? 0 : this.index < other.index ? -1 : 1;
+  }
+
+  farFrom(interval: Interval): PitchClass {
+    let distance = 0;
+    // FIXME: refer Interval
+    for (const next of PitchClass.pitchClasses(this)) {
+      distance++;
+      if (interval.distance === distance) {
+        return next;
+      }
+    }
+    throw new Error("[BUG] corresponding PitchClass not found");
+  }
+
+  private next(): PitchClass {
+    return this.equals(PitchClass.H)
+      ? PitchClass.C
+      : new PitchClass(this.index + 1);
   }
 }

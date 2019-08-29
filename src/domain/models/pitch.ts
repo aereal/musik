@@ -16,6 +16,10 @@ export class Pitch {
     );
   }
 
+  compare(other: Pitch): -1 | 0 | 1 {
+    return this.equals(other) ? 0 : this.index < other.index ? -1 : 1;
+  }
+
   ottavaSopra(): Pitch {
     return new Pitch(this.pitchClass, this.octave + 1);
   }
