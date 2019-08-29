@@ -2,23 +2,47 @@ import { PitchClass } from "./pitch-class";
 
 export class Scale {
   static major(tonic: PitchClass): Scale {
-    const [, ii, , iii, iv, , v, , vi, , vii] = PitchClass.pitchClasses(tonic);
-    return new Scale(new Set([tonic, ii, iii, iv, v, vi, vii]));
+    return new Scale(
+      tonic,
+      (tones: IterableIterator<PitchClass>): readonly PitchClass[] => {
+        const [, ii, , iii, iv, , v, , vi, , vii] = tones;
+        return [tonic, ii, iii, iv, v, vi, vii];
+      }
+    );
   }
 
   static naturalMinor(tonic: PitchClass): Scale {
-    const [, ii, iii, , iv, , v, vi, , vii] = PitchClass.pitchClasses(tonic);
-    return new Scale(new Set([tonic, ii, iii, iv, v, vi, vii]));
+    return new Scale(
+      tonic,
+      (tones: IterableIterator<PitchClass>): readonly PitchClass[] => {
+        const [, ii, iii, , iv, , v, vi, , vii] = tones;
+        return [tonic, ii, iii, iv, v, vi, vii];
+      }
+    );
   }
 
   static harmonicMinor(tonic: PitchClass): Scale {
-    const [, ii, iii, , iv, , v, vi, , , vii] = PitchClass.pitchClasses(tonic);
-    return new Scale(new Set([tonic, ii, iii, iv, v, vi, vii]));
+    return new Scale(
+      tonic,
+      (tones: IterableIterator<PitchClass>): readonly PitchClass[] => {
+        const [, ii, iii, , iv, , v, vi, , , vii] = tones;
+        return [tonic, ii, iii, iv, v, vi, vii];
+      }
+    );
   }
 
-  constructor(private readonly notes: Set<PitchClass>) {}
+  constructor(
+    private tonic: PitchClass,
+    private toneConsumer: (
+      iterator: IterableIterator<PitchClass>
+    ) => readonly PitchClass[]
+  ) {}
+
+  get notes(): readonly PitchClass[] {
+    return this.toneConsumer(PitchClass.pitchClasses(this.tonic));
+  }
 
   get notesSet(): Set<PitchClass> {
-    return this.notes;
+    return new Set(this.notes);
   }
 }
