@@ -25,7 +25,7 @@ describe("Interval", () => {
 
   test("describe methods", () => {
     interface Describe {
-      method: keyof Interval;
+      method: Exclude<keyof Interval, "equals">;
       expected: boolean;
     }
     interface TestCase {
