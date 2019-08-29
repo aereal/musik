@@ -1,48 +1,61 @@
 import { PitchClass } from "./pitch-class";
+import { take } from "../../iterator/take";
 
 export class Scale {
   static major(tonic: PitchClass): Scale {
-    return new Scale(
-      tonic,
-      (tones: IterableIterator<PitchClass>): readonly PitchClass[] => {
-        const [, ii, , iii, iv, , v, , vi, , vii] = tones;
-        return [tonic, ii, iii, iv, v, vi, vii];
+    return new Scale(function*(): IterableIterator<PitchClass> {
+      while (true) {
+        const [, ii, , iii, iv, , v, , vi, , vii] = PitchClass.pitchClasses(
+          tonic
+        );
+        yield tonic;
+        yield ii;
+        yield iii;
+        yield iv;
+        yield v;
+        yield vi;
+        yield vii;
       }
-    );
+    });
   }
 
   static naturalMinor(tonic: PitchClass): Scale {
-    return new Scale(
-      tonic,
-      (tones: IterableIterator<PitchClass>): readonly PitchClass[] => {
-        const [, ii, iii, , iv, , v, vi, , vii] = tones;
-        return [tonic, ii, iii, iv, v, vi, vii];
+    return new Scale(function*(): IterableIterator<PitchClass> {
+      while (true) {
+        const [, ii, iii, , iv, , v, vi, , vii] = PitchClass.pitchClasses(
+          tonic
+        );
+        yield tonic;
+        yield ii;
+        yield iii;
+        yield iv;
+        yield v;
+        yield vi;
+        yield vii;
       }
-    );
+    });
   }
 
   static harmonicMinor(tonic: PitchClass): Scale {
-    return new Scale(
-      tonic,
-      (tones: IterableIterator<PitchClass>): readonly PitchClass[] => {
-        const [, ii, iii, , iv, , v, vi, , , vii] = tones;
-        return [tonic, ii, iii, iv, v, vi, vii];
+    return new Scale(function*(): IterableIterator<PitchClass> {
+      while (true) {
+        const [, ii, iii, , iv, , v, vi, , , vii] = PitchClass.pitchClasses(
+          tonic
+        );
+        yield tonic;
+        yield ii;
+        yield iii;
+        yield iv;
+        yield v;
+        yield vi;
+        yield vii;
       }
-    );
+    });
   }
 
-  constructor(
-    private tonic: PitchClass,
-    private toneConsumer: (
-      iterator: IterableIterator<PitchClass>
-    ) => readonly PitchClass[]
-  ) {}
-
-  get notes(): readonly PitchClass[] {
-    return this.toneConsumer(PitchClass.pitchClasses(this.tonic));
-  }
+  constructor(public notes: () => IterableIterator<PitchClass>) {}
 
   get notesSet(): Set<PitchClass> {
-    return new Set(this.notes);
+    return new Set(take(this.notes(), 8));
   }
 }
