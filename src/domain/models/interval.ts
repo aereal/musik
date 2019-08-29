@@ -35,7 +35,7 @@ export class Interval {
     return new Interval(Math.abs(a.index - b.index));
   }
 
-  constructor(private distance: number) {}
+  constructor(public /* FIXME: make this private */ distance: number) {}
 
   simplify(): Interval {
     return new Interval(this.distance % Interval.PerfectOctave.distance);
