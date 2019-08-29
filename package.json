@@ -126,6 +126,7 @@
       "import/first": "error",
       "import/no-amd": "error",
       "import/no-webpack-loader-syntax": "error",
+      "react/prop-types": "off",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn"
     },
