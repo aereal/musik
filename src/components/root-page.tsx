@@ -16,6 +16,7 @@ export const RootPage: FC = () => {
   const [scaleType, setScaleType] = useState<ScaleType>("major");
   const [pitchClass, setPitchClass] = useState<PitchClass>(PitchClass.C);
   const [chords, setChords] = useState<readonly Chord[]>([]);
+  const [seekPosition, setSeekPosition] = useState<number>();
   const onChangeBPM = (nextBPM: number): void => setBPM(nextBPM);
   const handleChangeScaleType = (scaleType: ScaleType): void =>
     setScaleType(scaleType);
@@ -23,6 +24,16 @@ export const RootPage: FC = () => {
     setPitchClass(pitchClass);
   const handleChordsGenerated = (generated: readonly Chord[]): void =>
     setChords(generated);
+  const beats = 4;
+  const onPlay = (currentChords: readonly Chord[]): void => {
+    const intervalInMilliSecond = (60 * 1000 * beats) / bpm;
+    setSeekPosition(0);
+    setInterval(() => {
+      setSeekPosition(prev =>
+        prev !== undefined ? (prev >= chords.length ? undefined : prev + 1) : 0
+      );
+    }, intervalInMilliSecond);
+  };
 
   const scale = Scale.build(scaleType, pitchClass);
 
@@ -46,8 +57,8 @@ export const RootPage: FC = () => {
           bpm={bpm}
           onGenaratedChords={handleChordsGenerated}
         />
-        <ChordList chords={chords} />
-        <PlaySound chords={chords} />
+        <ChordList chords={chords} seekPosition={seekPosition} />
+        <PlaySound chords={chords} onPlay={onPlay} />
       </Grid>
     </Layout>
   );

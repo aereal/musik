@@ -6,9 +6,11 @@ import Button from "@material-ui/core/Button";
 
 interface Props {
   chords: readonly Chord[];
+  onPlay: (chords: readonly Chord[]) => void;
 }
 
-export const PlaySound: FC<Props> = ({ chords }) => {
+export const PlaySound: FC<Props> = ({ chords, onPlay }) => {
+  const handlePlay = (): void => onPlay(chords);
   return (
     <Grid xs={12} item container>
       <Typography variant="h5" component="h2">
@@ -19,6 +21,7 @@ export const PlaySound: FC<Props> = ({ chords }) => {
           disabled={chords.length < 1}
           variant="contained"
           color="primary"
+          onClick={handlePlay}
         >
           Play
         </Button>

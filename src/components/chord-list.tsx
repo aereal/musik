@@ -1,27 +1,20 @@
 import React, { FC } from "react";
 import { Chord } from "../domain/models/chord";
-import Chip from "@material-ui/core/Chip";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles(theme => ({
-  chip: {
-    margin: theme.spacing(1)
-  }
-}));
+import { ChordChip } from "./chord-chip";
 
 interface Props {
   chords: readonly Chord[];
+  seekPosition?: number;
 }
 
-export const ChordList: FC<Props> = ({ chords }) => {
-  const styles = useStyles();
+export const ChordList: FC<Props> = ({ chords, seekPosition }) => {
   return (
     <>
       {chords.map((chord, i) => (
-        <Chip
+        <ChordChip
+          current={seekPosition === i}
+          chord={chord}
           key={chord.toString() + `${i}`}
-          label={chord.toString()}
-          className={styles.chip}
         />
       ))}
     </>
