@@ -30,7 +30,11 @@ export const RootPage: FC = () => {
     setSeekPosition(0);
     setInterval(() => {
       setSeekPosition(prev =>
-        prev !== undefined ? (prev >= chords.length ? undefined : prev + 1) : 0
+        prev !== undefined
+          ? prev >= currentChords.length
+            ? undefined
+            : prev + 1
+          : 0
       );
     }, intervalInMilliSecond);
   };
