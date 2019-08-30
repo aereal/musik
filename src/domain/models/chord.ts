@@ -9,7 +9,7 @@ export class Chord {
     this.notes = new Set([base, second, ...tones]);
   }
 
-  private get sortedNotes(): PitchClass[] {
+  get sortedNotes(): PitchClass[] {
     return Array.from(this.notes).sort((a, b) => a.compare(b));
   }
 

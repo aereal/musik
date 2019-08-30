@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { Layout } from "./layout";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -10,6 +10,7 @@ import { Harmony } from "./harmony";
 import { Chord } from "../domain/models/chord";
 import { ChordList } from "./chord-list";
 import { PlaySound } from "./play-sound";
+import { Pitch } from "../domain/models/pitch";
 
 export const RootPage: FC = () => {
   const [bpm, setBPM] = useState(80);
@@ -17,6 +18,31 @@ export const RootPage: FC = () => {
   const [pitchClass, setPitchClass] = useState<PitchClass>(PitchClass.C);
   const [chords, setChords] = useState<readonly Chord[]>([]);
   const [seekPosition, setSeekPosition] = useState<number>();
+  useEffect(() => {
+    if (seekPosition === undefined) {
+      return;
+    }
+    const currentChord = chords[seekPosition];
+    if (currentChord === undefined) {
+      return;
+    }
+    const audioCtx = new AudioContext();
+    const oscillators = currentChord.sortedNotes.map(note => {
+      const pitch = new Pitch(note, 5);
+      const oscillator = audioCtx.createOscillator();
+      oscillator.type = "square";
+      oscillator.connect(audioCtx.destination);
+      console.log(
+        `pitch = ${pitch.pitchClass} (octave: ${pitch.octave}) frequency: ${pitch.frequency}`
+      );
+      oscillator.frequency.value = pitch.frequency;
+      return oscillator;
+    });
+    oscillators.forEach(o => o.start());
+    return (): void => {
+      oscillators.forEach(o => o.stop());
+    };
+  }, [seekPosition, chords]);
   const onChangeBPM = (nextBPM: number): void => setBPM(nextBPM);
   const handleChangeScaleType = (scaleType: ScaleType): void =>
     setScaleType(scaleType);
