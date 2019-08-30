@@ -41,4 +41,8 @@ export class Chord {
       []
     );
   }
+
+  toString(): string {
+    return this.sortedNotes.map(note => note.toString()).join(", ");
+  }
 }
