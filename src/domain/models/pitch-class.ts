@@ -39,7 +39,7 @@ export class PitchClass {
     }
   };
 
-  private constructor(public index: number) {}
+  constructor(public index: number) {}
 
   equals(other: PitchClass): boolean {
     return this.index === other.index;
@@ -59,6 +59,37 @@ export class PitchClass {
       }
     }
     throw new Error("[BUG] corresponding PitchClass not found");
+  }
+
+  toString(): string {
+    switch (this.index) {
+      case 0:
+        return "C";
+      case 1:
+        return "Cis";
+      case 2:
+        return "D";
+      case 3:
+        return "Es";
+      case 4:
+        return "E";
+      case 5:
+        return "F";
+      case 6:
+        return "Fis";
+      case 7:
+        return "G";
+      case 8:
+        return "As";
+      case 9:
+        return "A";
+      case 10:
+        return "B";
+      case 11:
+        return "H";
+      default:
+        throw new Error("invalid value");
+    }
   }
 
   private next(): PitchClass {

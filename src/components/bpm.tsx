@@ -11,10 +11,7 @@ interface Props {
 }
 
 const useStyles = makeStyles(theme => ({
-  input: { width: 42 },
-  root: {
-    padding: theme.spacing(2)
-  }
+  input: { width: 42 }
 }));
 
 export const BPM: FC<Props> = ({ bpm, onChange }) => {
@@ -29,7 +26,7 @@ export const BPM: FC<Props> = ({ bpm, onChange }) => {
   };
 
   return (
-    <Grid className={styles.root} item xs>
+    <Grid xs={12} item container>
       <Typography variant="h5" component="h2">
         BPM
       </Typography>
