@@ -1,13 +1,21 @@
 import { PitchClass } from "./pitch-class";
 
 const SUBCONTRA = 0;
+const ONELINE = 4;
 const OCTAVE_OFFSET = 11;
 
 export class Pitch {
+  private static CONCERT_A = new Pitch(PitchClass.A, 4);
   constructor(public pitchClass: PitchClass, public octave: number) {}
 
   get index(): number {
     return this.pitchClass.index + this.octave * OCTAVE_OFFSET;
+  }
+
+  get frequency(): number {
+    const baseFrequency = this.pitchClass.baseFrequency;
+    const octaveRatio = this.octave === ONELINE ? 1 : 1;
+    return baseFrequency * octaveRatio;
   }
 
   equals(other: Pitch): boolean {

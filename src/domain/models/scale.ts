@@ -1,7 +1,21 @@
 import { PitchClass } from "./pitch-class";
 import { take } from "../../iterator/take";
 
+const scaleTypes = ["major" as const, "naturalMinor" as const];
+export type ScaleType = typeof scaleTypes[number];
+type ScaleConstructor = (tonic: PitchClass) => Scale;
+
 export class Scale {
+  private static constructors: Record<ScaleType, ScaleConstructor> = {
+    major: Scale.major.bind(Scale),
+    naturalMinor: Scale.naturalMinor.bind(Scale)
+  };
+
+  static scaleTypes = scaleTypes;
+
+  static build = (scaleType: ScaleType, tonic: PitchClass): Scale =>
+    Scale.constructors[scaleType](tonic);
+
   static major(tonic: PitchClass): Scale {
     return new Scale(function*(): IterableIterator<PitchClass> {
       while (true) {
@@ -54,6 +68,11 @@ export class Scale {
   }
 
   constructor(public notes: () => IterableIterator<PitchClass>) {}
+
+  get tonic(): PitchClass {
+    const { value } = this.notes().next();
+    return value;
+  }
 
   get notesSet(): Set<PitchClass> {
     return new Set(take(this.notes(), 8));
