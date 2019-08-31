@@ -8,7 +8,7 @@ describe("Chord", () => {
   const chord2 = new Chord(E, G, C);
 
   test("constructor", () => {
-    expect(chord1).toStrictEqual(chord2);
+    expect(chord1).not.toStrictEqual(chord2);
     expect(chord1.equals(chord2)).toBe(true);
   });
 

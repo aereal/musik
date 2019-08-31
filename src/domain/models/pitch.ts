@@ -1,6 +1,7 @@
 import { PitchClass } from "./pitch-class";
 
 const SUBCONTRA = 0;
+const ONELINE = 4;
 const OCTAVE_OFFSET = 11;
 
 export class Pitch {
@@ -12,11 +13,9 @@ export class Pitch {
   }
 
   get frequency(): number {
-    const isLower = this.index < Pitch.CONCERT_A.index;
-    const distance = Math.abs(this.index - Pitch.CONCERT_A.index);
-    const ratio = Math.pow(2, distance / 12);
-    const concertPitch = 440;
-    return concertPitch * (isLower ? 1 / ratio : ratio);
+    const baseFrequency = this.pitchClass.baseFrequency;
+    const octaveRatio = this.octave === ONELINE ? 1 : 1;
+    return baseFrequency * octaveRatio;
   }
 
   equals(other: Pitch): boolean {

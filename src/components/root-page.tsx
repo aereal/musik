@@ -27,8 +27,7 @@ export const RootPage: FC = () => {
       return;
     }
     const audioCtx = new AudioContext();
-    const oscillators = currentChord.sortedNotes.map(note => {
-      const pitch = new Pitch(note, 5);
+    const oscillators = currentChord.pitches().map(pitch => {
       const oscillator = audioCtx.createOscillator();
       oscillator.type = "square";
       oscillator.connect(audioCtx.destination);

@@ -92,6 +92,37 @@ export class PitchClass {
     }
   }
 
+  get baseFrequency(): number {
+    switch (this.index) {
+      case PitchClass.C.index:
+        return 261.63;
+      case PitchClass.Cis.index:
+        return 277.18;
+      case PitchClass.D.index:
+        return 293.66;
+      case PitchClass.Es.index:
+        return 311.13;
+      case PitchClass.E.index:
+        return 329.63;
+      case PitchClass.F.index:
+        return 349.23;
+      case PitchClass.Fis.index:
+        return 369.99;
+      case PitchClass.G.index:
+        return 392.0;
+      case PitchClass.As.index:
+        return 415.3;
+      case PitchClass.A.index:
+        return 440;
+      case PitchClass.B.index:
+        return 466.16;
+      case PitchClass.H.index:
+        return 493.88;
+      default:
+        throw new Error(`invalid pitch class`);
+    }
+  }
+
   private next(): PitchClass {
     return this.equals(PitchClass.H)
       ? PitchClass.C
